@@ -5,12 +5,21 @@ import 'primeicons/primeicons.css'
 export default {
   data() {
     return {
-      activeMenu: 'organizations',
       menus: [
         { id: 'organizations', name: 'Организации' },
         { id: 'tasks', name: 'Задачи' },
-        { id: 'analytics', name: 'Отчетность' }
+        { id: 'reporting', name: 'Отчетность' }
       ]
+    }
+  },
+  computed: {
+    currentRoute() {
+      return this.$route.name
+    }
+  },
+  methods: {
+    navigateTo(routeName) {
+      this.$router.push({ name: routeName })
     }
   }
 }
@@ -23,15 +32,15 @@ export default {
           v-for="menu in menus"
           :key="menu.id"
           class="p-3 border-round cursor-pointer text-xl"
-          :class="{ 'glass-active': activeMenu === menu.id }"
-          @click="activeMenu = menu.id"
+          :class="{ 'glass-active': currentRoute === menu.id }"
+          @click="navigateTo(menu.id)"
       >
         {{ menu.name }}
       </div>
     </div>
 
     <div class="flex-1 flex-column flex p-2 border-round-xl glass-effect">
-
+      <router-view />
     </div>
   </div>
 </template>
@@ -69,16 +78,16 @@ export default {
 }
 
 .glass-active {
-  background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .glass-active-dark {
   background: rgba(30, 40, 60, 0.4);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(8px);
 }
 
